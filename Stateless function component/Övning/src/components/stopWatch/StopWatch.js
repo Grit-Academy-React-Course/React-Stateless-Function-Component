@@ -7,7 +7,7 @@ const StopWatch = (props) => {
     return (
         <div className="stopWatch">
             <h1>{addLeadingZeros(props.hours, 2)}:{addLeadingZeros(props.minutes, 2)}:{addLeadingZeros(props.seconds, 2)}</h1>
-            <button className="start" onClick={props.start}>Start</button>
+            <button disabled={!props.enableStart} className="start" onClick={props.start}>Start</button>
             <button className="pause" onClick={props.pause}>Pause</button>
             <button className="reset" onClick={props.reset}>Reset</button>
         </div>

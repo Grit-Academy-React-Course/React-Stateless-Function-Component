@@ -1,27 +1,22 @@
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import StopWatch from "./components/stopWatch/StopWatch";
 
 const App = () => {
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(58);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
   const [interval, setIntervalMethod] = useState(null);
+  const [enableStart, setEnableStart] = useState(true);
 
   const start = () => {
+    setEnableStart(false)
     setIntervalMethod(setInterval(() => {
       setSeconds(seconds => seconds + 1)
-      if (seconds === 59) {
-        setSeconds(0)
-        setMinutes(minutes => minutes + 1)
-      }
-      if (minutes === 59 && seconds === 59) {
-        setMinutes(0)
-        setHours(hours => hours + 1)
-      }
     }, 1000))
   }
 
   const pause = () => {
+    setEnableStart(true)
     clearInterval(interval)
   }
 
@@ -30,6 +25,16 @@ const App = () => {
     setMinutes(0)
     setHours(0)
     clearInterval(interval)
+    setEnableStart(true)
+  }
+
+  if (seconds === 60) {
+    setSeconds(0)
+    setMinutes(minutes => minutes + 1)
+  }
+  if (minutes === 60 && seconds === 60) {
+    setMinutes(0)
+    setHours(hours => hours + 1)
   }
 
   return (
@@ -41,6 +46,7 @@ const App = () => {
         seconds={seconds}
         minutes={minutes}
         hours={hours}
+        enableStart={enableStart}
       />
     </Fragment>
   )
